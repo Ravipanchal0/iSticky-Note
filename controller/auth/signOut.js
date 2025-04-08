@@ -10,20 +10,12 @@ const signOutUser = asyncHandler(async (req, res) => {
   };
 
   // Middleware verifyAccessToken
-  const userData = req.user;
 
-  if (!userData) {
-    throw new ApiError(401, "Unauthorized access");
-  }
-
-  const user = await User.findById(userData._id).select("+refreshToken");
-
-  if (!user) {
-    throw new ApiError(404, "User not found");
-  }
-
-  user.refreshToken = "";
-  await user.save({ validateBeforeSave: false });
+  await User.findByIdAndUpdate(
+    req.user._id,
+    { $set: { refreshToken: null } },
+    { new: true }
+  );
 
   return res
     .status(200)
