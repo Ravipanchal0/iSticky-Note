@@ -10,6 +10,27 @@ const noteSchema = new Schema(
       type: String,
       default: "bg-purple-500",
     },
+    isCompleted: {
+      type: Boolean,
+      default: false,
+    },
+    category: {
+      type: String,
+      enum: [
+        "Personal",
+        "Work",
+        "Study",
+        "Shopping",
+        "Ideas",
+        "Reminders",
+        "Health",
+        "Travel",
+        "Finance",
+        "To-Do",
+      ],
+      default: "Personal",
+      index: true,
+    },
     userId: {
       type: Schema.Types.ObjectId,
       ref: "User",

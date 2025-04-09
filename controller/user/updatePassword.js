@@ -3,21 +3,28 @@ import { ApiError, ApiResponse, asyncHandler } from "../../utils/index.js";
 
 const updatePassword = asyncHandler(async (req, res) => {
   // Get req.user from middleware verifyAccessToken
-  // Get new password from frontend
+  // Get old and new password from frontend
   // validation both user and new password
+  // compare old password
   // Hash new password
   // update User using findByIdAndUpdate
   // return response
 
-  const { newPassword } = req.body;
+  const { oldPassword, newPassword } = req.body;
 
-  if (!newPassword.trim()) {
-    throw new ApiError(400, "New password is required");
+  if (!(newPassword.trim() && oldPassword.trim())) {
+    throw new ApiError(400, "All fields are required");
   }
   const user = await User.findById(req.user?._id).select("+password");
 
   if (!user) {
     throw new ApiError(401, "Unauthorized access");
+  }
+
+  const isPasswordCorrect = await user.isPasswordValid(oldPassword);
+
+  if (!isPasswordCorrect) {
+    throw new ApiError(400, "Old password is incorrect");
   }
 
   user.password = newPassword;
