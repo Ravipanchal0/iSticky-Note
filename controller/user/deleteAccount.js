@@ -11,13 +11,11 @@ const deleteAccount = asyncHandler(async (req, res) => {
     sameSite: "strict",
   };
 
-  const user = await User.findById(req.user?._id);
+  const user = await User.findByIdAndDelete(req.user?._id);
 
   if (!user) {
     throw new ApiError(401, "Unauthorized access");
   }
-
-  await user.deleteOne();
 
   return res
     .status(200)

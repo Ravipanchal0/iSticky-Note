@@ -20,7 +20,7 @@ const deactivateUserAccount = asyncHandler(async (req, res) => {
   return await signOutUser(
     req,
     res,
-    "Your account has been deleted and you've been logged out"
+    "Your account has been deactivated and you've been logged out"
   );
 });
 

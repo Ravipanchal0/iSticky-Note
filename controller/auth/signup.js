@@ -2,6 +2,8 @@ import { asyncHandler, ApiError, ApiResponse } from "../../utils/index.js";
 import User from "../../models/user.model.js";
 
 const signupUser = asyncHandler(async (req, res) => {
+  console.log(req.body);
+  // Get data from frontend
   const { username, email, fullName, password } = req.body;
 
   if (
@@ -30,7 +32,7 @@ const signupUser = asyncHandler(async (req, res) => {
 
   return res
     .status(201)
-    .json(new ApiResponse(201, createdUser), "User created successfully");
+    .json(new ApiResponse(201, createdUser, "Account created successfully"));
 });
 
 export default signupUser;

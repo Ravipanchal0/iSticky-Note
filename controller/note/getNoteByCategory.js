@@ -5,7 +5,7 @@ const getNoteByCategory = asyncHandler(async (req, res) => {
   const { category } = req.query; //`/api/notes/by-category?category=${category}`
 
   if (!category) {
-    throw new ApiError(400, "Category is required");
+    category = personal;
   }
 
   const notes = await Note.find({ userId: req.user._id, category });

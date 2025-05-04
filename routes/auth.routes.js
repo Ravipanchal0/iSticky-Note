@@ -10,8 +10,8 @@ import verifyAccessToken from "../middlewares/auth.middleware.js";
 const router = express.Router();
 
 router.route("/signup").post(signupUser);
-router.route("/signin").post(signInUser);
-router.route("/signout").post(verifyAccessToken, signOutUser);
+router.route("/login").post(signInUser);
+router.route("/logout").post(verifyAccessToken, signOutUser);
 router.route("/refresh-token").post(refreshAccessToken);
 
 export default router;

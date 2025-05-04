@@ -1,4 +1,4 @@
-import { ApiResponse, asyncHandler } from "../../utils";
+import { ApiResponse, asyncHandler } from "../../utils/index.js";
 
 const currentUser = asyncHandler(async (req, res) => {
   // Get req.user from middleware verifyAccessToken

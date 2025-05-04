@@ -7,9 +7,9 @@ const createNote = asyncHandler(async (req, res) => {
   // create a note and save it into db
   // resturn response
 
-  const { content, color, category } = req.body;
+  const { title, content, category } = req.body;
 
-  if (!content.trim()) {
+  if (!content?.trim() && !title?.trim()) {
     throw new ApiError(400, "Note content is required");
   }
 
@@ -17,8 +17,8 @@ const createNote = asyncHandler(async (req, res) => {
   const user = req.user;
 
   const note = await Note.create({
+    title,
     content,
-    color,
     category,
     userId: user?._id,
   });

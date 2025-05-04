@@ -2,6 +2,8 @@ import Note from "../../models/note.model.js";
 import { ApiResponse, asyncHandler } from "../../utils/index.js";
 
 const getAllNoteOfUser = asyncHandler(async (req, res) => {
+  // use middleware auth.middleware.js
+
   const notes = await Note.find({ userId: req.user?._id }).sort({
     createdAt: -1,
   });

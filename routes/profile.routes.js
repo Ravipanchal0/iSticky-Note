@@ -5,10 +5,12 @@ import {
   updatePassword,
   deactivateAccount,
   activateAccount,
+  currentUser,
 } from "../controller/user/index.js";
 
 const router = express.Router();
 
+router.route("/").get(verifyAccessToken, currentUser);
 router.route("/update-password").put(verifyAccessToken, updatePassword);
 router.route("/deactivate-account").put(verifyAccessToken, deactivateAccount);
 router.route("/activate-account").put(activateAccount);

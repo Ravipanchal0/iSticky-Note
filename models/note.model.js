@@ -2,13 +2,17 @@ import mongoose, { Schema } from "mongoose";
 
 const noteSchema = new Schema(
   {
+    title: {
+      type: String,
+      required: true,
+    },
     content: {
       type: String,
       required: true,
     },
-    color: {
-      type: String,
-      default: "bg-purple-500",
+    isStarred: {
+      type: Boolean,
+      default: false,
     },
     isCompleted: {
       type: Boolean,

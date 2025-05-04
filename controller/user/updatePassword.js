@@ -12,7 +12,7 @@ const updatePassword = asyncHandler(async (req, res) => {
 
   const { oldPassword, newPassword } = req.body;
 
-  if (!(newPassword.trim() && oldPassword.trim())) {
+  if (!(newPassword?.trim() && oldPassword?.trim())) {
     throw new ApiError(400, "All fields are required");
   }
   const user = await User.findById(req.user?._id).select("+password");
