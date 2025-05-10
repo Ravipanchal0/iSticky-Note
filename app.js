@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 const app = express();
 
 app.use(express.json());
-app.use(cors({ origin: process.env.ORIGIN, credentials: true }));
+app.use(cors({ origin: "*", credentials: true }));
 app.use(urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(cookieParser());
@@ -18,5 +18,8 @@ import noteRouter from "./routes/note.routes.js";
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/note", noteRouter);
+
+import errorHandler from "./middlewares/errorHandler.js";
+app.use(errorHandler);
 
 export default app;
