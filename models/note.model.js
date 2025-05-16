@@ -22,6 +22,7 @@ const noteSchema = new Schema(
       type: String,
       enum: [
         "personal",
+        "education",
         "work",
         "study",
         "shopping",

@@ -17,8 +17,8 @@ const signInUser = asyncHandler(async (req, res) => {
 
   const cookieOptions = {
     httpOnly: true,
-    secure: true,
-    sameSite: "strict",
+    secure: false, // false for development only
+    sameSite: "Lax", // Lax for local, use None for production
   };
 
   // Get username or email alias loginId and password

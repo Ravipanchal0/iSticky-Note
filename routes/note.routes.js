@@ -8,12 +8,14 @@ import {
   addFavoriteNote,
   completeNote,
   deleteNote,
+  getFavNotes,
 } from "../controller/note/index.js";
 
 const router = express.Router();
 
 router.route("/add-note").post(verifyAccessToken, createNote);
 router.route("/getNotes").get(verifyAccessToken, getAllNoteOfUser);
+router.route("/favNotes").get(verifyAccessToken, getFavNotes);
 router.route("/update-note").put(updateNote);
 router.route("/addFavorite").put(addFavoriteNote);
 router.route("/completeNote").put(completeNote);

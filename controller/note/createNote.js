@@ -13,7 +13,7 @@ const createNote = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Note content is required");
   }
 
-  // use middleware
+  // using middleware - auth.middleware.js
   const user = req.user;
 
   const note = await Note.create({

@@ -7,8 +7,8 @@ const deleteAccount = asyncHandler(async (req, res) => {
   // clear cookies
   const cookieOptions = {
     httpOnly: true,
-    secure: true,
-    sameSite: "strict",
+    secure: false, // false for development only
+    sameSite: "Lax", // Lax for local, use strict for production
   };
 
   const user = await User.findByIdAndDelete(req.user?._id);

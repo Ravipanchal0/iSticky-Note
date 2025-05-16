@@ -5,6 +5,7 @@ import getNoteByCategory from "./getNoteByCategory.js";
 import addFavoriteNote from "./addFavoriteNote.js";
 import completeNote from "./completeNote.js";
 import deleteNote from "./deleteNote.js";
+import getFavNotes from "./getFavNotes.js";
 
 export {
   createNote,
@@ -14,4 +15,5 @@ export {
   addFavoriteNote,
   completeNote,
   deleteNote,
+  getFavNotes,
 };

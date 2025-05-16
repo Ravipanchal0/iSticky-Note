@@ -5,8 +5,8 @@ const signOutUser = asyncHandler(
   async (req, res, customMessage = "Logged out successfully") => {
     const cookieOptions = {
       httpOnly: true,
-      secure: true,
-      sameSite: "strict",
+      secure: false, // false for development only
+      sameSite: "Lax", // Lax for local, use None for production
       expires: new Date(0),
     };
 

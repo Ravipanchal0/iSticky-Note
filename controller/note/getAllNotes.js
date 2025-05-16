@@ -8,7 +8,15 @@ const getAllNoteOfUser = asyncHandler(async (req, res) => {
     createdAt: -1,
   });
 
-  return res.status(200).json(new ApiResponse(200, notes, "All notes fetched"));
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { noOfNotes: notes.length, notes },
+        "All notes fetched"
+      )
+    );
 });
 
 export default getAllNoteOfUser;
