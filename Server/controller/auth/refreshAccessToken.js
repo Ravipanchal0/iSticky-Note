@@ -19,8 +19,8 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 
   const cookieOptions = {
     httpOnly: true,
-    secure: false, // false for development only
-    sameSite: "Lax", // Lax for local, use None for production
+    secure: process.env.NODE_ENV !== "development",
+    sameSite: "strict",
   };
 
   const incomingRefreshToken =
@@ -49,13 +49,13 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     user._id
   );
 
+  const newUser = await User.findById(user._id);
+
   return res
     .status(200)
     .cookie("accessToken", accessToken, cookieOptions)
     .cookie("refreshToken", refreshToken, cookieOptions)
-    .json(
-      new ApiResponse(200, { accessToken, refreshToken }, "Token refreshed")
-    );
+    .json(new ApiResponse(200, newUser, "Token refreshed"));
 });
 
 export default refreshAccessToken;

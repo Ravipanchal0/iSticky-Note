@@ -17,7 +17,6 @@ class AuthServices {
     } catch (error) {
       const errorMessage =
         error.response?.data?.message || "Something went wrong. Try again.";
-      // console.log(error.response.data);
       throw new Error(errorMessage);
     }
   }
@@ -57,16 +56,16 @@ class AuthServices {
 
   async loginByAccessToken() {
     try {
-      const response = await axios.get(
+      const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/auth/refresh-token`,
         {},
         { withCredentials: true }
       );
+
       return response;
     } catch (error) {
       const errorMessage =
         error.response?.data || "Something went wrong. Try again.";
-      console.log(error.response);
       throw new Error(errorMessage);
     }
   }

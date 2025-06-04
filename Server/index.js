@@ -1,5 +1,6 @@
 import app from "./app.js";
 import DBConnect from "./db/dbConnect.js";
+import "dotenv/config";
 
 const port = process.env.PORT || 3001;
 

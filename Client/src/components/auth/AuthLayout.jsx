@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -15,9 +15,8 @@ const AuthLayout = ({ children, authentication = true }) => {
   async function loginByToken() {
     try {
       const response = await authServices.loginByAccessToken();
-      if (response) {
-        console.log(response);
-        dispatch(login(response.data.user));
+      if (response.data.success) {
+        dispatch(login(response.data));
         navigate("/dashboard");
       }
     } catch (error) {
@@ -27,7 +26,7 @@ const AuthLayout = ({ children, authentication = true }) => {
 
   useEffect(() => {
     loginByToken();
-  }, []);
+  }, [navigate, dispatch]);
 
   useEffect(() => {
     if (authentication && authStatus !== authentication) {

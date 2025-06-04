@@ -1,11 +1,12 @@
 import express, { urlencoded } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import "dotenv/config";
 
 const app = express();
 
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: process.env.ORIGIN, credentials: true }));
 app.use(urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(cookieParser());
