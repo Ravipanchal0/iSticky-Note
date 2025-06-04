@@ -1,0 +1,40 @@
+{
+  "name": "iSticky-notes",
+  "version": "1.0.0",
+  "description": "iSticky Note is a full-stack web application built using the MERN stack (MongoDB, Express, React, Node.js). It allows users to create, update, mark as done, and delete sticky notes after logging in.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "server": "nodemon server/index.js",
+    "client": "npm run dev --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\" "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ravipanchal0/iSticky-Note.git"
+  },
+  "keywords": [
+    "notes",
+    "sticky notes",
+    "mern stack",
+    "full stack web application",
+    "react",
+    "node.js",
+    "mongodb"
+  ],
+  "author": "Ravi Panchal",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.13.2"
+  },
+  "bugs": {
+    "url": "https://github.com/Ravipanchal0/iSticky-Note/issues"
+  },
+  "homepage": "https://github.com/Ravipanchal0/iSticky-Note#readme"
+}
