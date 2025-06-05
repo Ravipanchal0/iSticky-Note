@@ -21,8 +21,15 @@ export const authApiSlice = apiSlice.injectEndpoints({
     }),
     refreshtoken: builder.mutation({
       query: () => ({
-        url: `${AUTH_URL}/refresh-token`,
+        url: `${AUTH_URL}/verifyRefreshToken`,
         method: "POST",
+      }),
+    }),
+    registerAccount: builder.mutation({
+      query: (userData) => ({
+        url: `${AUTH_URL}/register`,
+        method: "POST",
+        body: userData,
       }),
     }),
   }),
@@ -38,7 +45,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
     }),
     updateProfile: builder.mutation({
       query: (userData) => ({
-        url: `${USER_URL}/update-profile`,
+        url: `${USER_URL}/update`,
         method: "PUT",
         body: userData,
       }),
@@ -125,8 +132,12 @@ export const noteApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useLoginMutation, useLogoutMutation, useRefreshtokenMutation } =
-  authApiSlice;
+export const {
+  useLoginMutation,
+  useLogoutMutation,
+  useRefreshtokenMutation,
+  useRegisterAccountMutation,
+} = authApiSlice;
 
 export const {
   useCurrentUserMutation,

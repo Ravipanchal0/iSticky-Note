@@ -1,10 +1,12 @@
-import React, { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import NoteCard from "./NoteCard.jsx";
 import { NavLink } from "react-router-dom";
 import { FaAngleRight, FaAngleLeft } from "../../assets/icons.js";
 import { useSelector, useDispatch } from "react-redux";
 import { setNotes } from "../../store/noteSlice.js";
-import noteServices from "../../controller/note.js";
+
+import { useGetAllNotesMutation } from "../../store/authApiSlice.js";
+import { Loader } from "../utilities/index.js";
 
 const AllNotes = () => {
   const dispatch = useDispatch();
@@ -17,8 +19,10 @@ const AllNotes = () => {
   const [totalPages, setTotalPages] = useState(1);
   const notesPerPage = 6;
 
+  const [getAllNotes, { isLoading }] = useGetAllNotesMutation();
+
   const handleAllNotes = useCallback(async () => {
-    const response = await noteServices.getAllNotes();
+    const response = await getAllNotes().unwrap();
     if (response.data.notes) {
       dispatch(setNotes(response.data.notes));
       setCurrentPage(1);
@@ -77,6 +81,7 @@ const AllNotes = () => {
 
   return (
     <div className="relative w-full py-3 px-5 my-7">
+      {/* {isLoading && <Loader />} */}
       {/* // Page Header */}
       <div className="page-header flex justify-between items-center">
         <div className="page-title">

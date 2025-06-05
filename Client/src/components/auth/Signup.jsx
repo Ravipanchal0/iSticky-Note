@@ -1,11 +1,13 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import Input from "../utilities/Input.jsx";
-import Button from "../utilities/Button.jsx";
-
-import authServices from "../../controller/auth.js";
+import { Loader, Button, Input } from "../utilities/index.js";
 import { login as authLogin } from "../../store/authSlice.js";
 import { useDispatch } from "react-redux";
+
+import {
+  useRegisterAccountMutation,
+  useLoginMutation,
+} from "../../store/authApiSlice.js";
 
 const Signup = () => {
   const [error, setError] = useState("");
@@ -18,24 +20,29 @@ const Signup = () => {
     password: useRef(null),
   };
 
-  const signup = async (e) => {
+  const [registerAccount, { isLoading }] = useRegisterAccountMutation();
+  const [login, { isLoading: isLoginLoading }] = useLoginMutation();
+
+  const handleRegisterAccount = async (e) => {
     e.preventDefault();
+
     try {
       setError("");
+
       const values = {
         fullName: inputRefs.fullName.current.value,
         email: inputRefs.email.current.value,
         username: inputRefs.username.current.value,
         password: inputRefs.password.current.value,
       };
-      const response = await authServices.createAccount(values);
+      const response = await registerAccount(values).unwrap();
+
       if (response.data) {
         try {
-          const session = await authServices.login({
+          const session = await login({
             loginId: values.username,
             password: values.password,
-          });
-
+          }).unwrap();
           if (session) {
             dispatch(authLogin(session.data.user));
             navigate("/dashboard");
@@ -44,17 +51,15 @@ const Signup = () => {
           setError(error.message);
         }
       }
-    } catch (error) {
-      setError(error.message);
+    } catch (err) {
+      console.log(err);
+      setError(err.data.message);
     }
-  };
-
-  const handleSignin = () => {
-    navigate("/login");
   };
 
   return (
     <div className="w-full h-full flex justify-center items-center">
+      {(isLoading || isLoginLoading) && <Loader />}
       <div className="container z-10 w-2xl shadow bg-gray-100 p-5 rounded-lg border border-gray-300">
         <div className="header text-center relative">
           <h2 className="text-slate-800 text-2xl font-bold underline underline-offset-2 mb-2">
@@ -68,7 +73,10 @@ const Signup = () => {
           <p className="text-red-600 text-sm">{error}</p>
         </div>
 
-        <form onSubmit={signup} className="form flex flex-col gap-3 mt-5">
+        <form
+          onSubmit={handleRegisterAccount}
+          className="form flex flex-col gap-3 mt-5"
+        >
           <div className="box flex gap-5">
             <Input
               label="Full Name : "
@@ -107,7 +115,9 @@ const Signup = () => {
           <p className="my-4">
             Already have an account?
             <button
-              onClick={handleSignin}
+              onClick={() => {
+                navigate("/login");
+              }}
               className="italic text-blue-600 text-sm font-semibold cursor-pointer hover:text-blue-700 duration-200"
             >
               Signin

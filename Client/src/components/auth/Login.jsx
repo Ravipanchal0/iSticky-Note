@@ -23,27 +23,27 @@ const Login = () => {
   const [getAllNotes, { isLoading: notesLoader }] = useGetAllNotesMutation();
 
   async function fetchAllNotes() {
-    const response = await getAllNotes();
-    if (response.data.data.notes) {
-      dispatch(setNotes(response.data.data.notes));
+    const response = await getAllNotes().unwrap();
+    if (response) {
+      dispatch(setNotes(response.data?.notes));
     }
   }
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError("");
     try {
+      setError("");
       const session = await login({
         loginId: loginRef.current.value,
         password: passwordRef.current.value,
-      });
+      }).unwrap();
       if (session) {
-        dispatch(authLogin(session.data.user));
+        dispatch(authLogin(session.data?.user));
         await fetchAllNotes();
         navigate("/dashboard");
       }
-    } catch (error) {
-      setError(error.message);
+    } catch (err) {
+      setError(err.data.message);
     }
   };
 
