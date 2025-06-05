@@ -1,0 +1,147 @@
+import apiSlice from "./apiSlice";
+
+const AUTH_URL = "/auth";
+const USER_URL = "/user";
+const NOTE_URL = "/note";
+
+export const authApiSlice = apiSlice.injectEndpoints({
+  endpoints: (builder) => ({
+    login: builder.mutation({
+      query: (Credentials) => ({
+        url: `${AUTH_URL}/login`,
+        method: "POST",
+        body: Credentials,
+      }),
+    }),
+    logout: builder.mutation({
+      query: () => ({
+        url: `${AUTH_URL}/logout`,
+        method: "POST",
+      }),
+    }),
+    refreshtoken: builder.mutation({
+      query: () => ({
+        url: `${AUTH_URL}/refresh-token`,
+        method: "POST",
+      }),
+    }),
+  }),
+});
+
+export const userApiSlice = apiSlice.injectEndpoints({
+  endpoints: (builder) => ({
+    currentUser: builder.mutation({
+      query: () => ({
+        url: `${USER_URL}`,
+        method: "GET",
+      }),
+    }),
+    updateProfile: builder.mutation({
+      query: (userData) => ({
+        url: `${USER_URL}/update-profile`,
+        method: "PUT",
+        body: userData,
+      }),
+    }),
+    passwordUpdate: builder.mutation({
+      query: (passwordData) => ({
+        url: `${USER_URL}/update-password`,
+        method: "PUT",
+        body: passwordData,
+      }),
+    }),
+    accountDeactivate: builder.mutation({
+      query: () => ({
+        url: `${USER_URL}/deactivate-account`,
+        method: "PUT",
+      }),
+    }),
+    accountActivate: builder.mutation({
+      query: (activationData) => ({
+        url: `${USER_URL}/activate-account`,
+        method: "PUT",
+        body: activationData,
+      }),
+    }),
+    deleteAccount: builder.mutation({
+      query: () => ({
+        url: `${USER_URL}/delete-account`,
+        method: "DELETE",
+      }),
+    }),
+  }),
+});
+
+export const noteApiSlice = apiSlice.injectEndpoints({
+  endpoints: (builder) => ({
+    getAllNotes: builder.mutation({
+      query: () => ({
+        url: `${NOTE_URL}/getNotes`,
+        method: "GET",
+      }),
+    }),
+    addNotes: builder.mutation({
+      query: (noteData) => ({
+        url: `${NOTE_URL}/addNote`,
+        method: "POST",
+        body: noteData,
+      }),
+    }),
+    //   async onQueryStarted(noteData, { dispatch, queryFulfilled }) {
+    //     try {
+    //       const { data } = await queryFulfilled;
+    //       dispatch(addNote(data));
+    //     } catch (error) {
+    //       console.error("Failed to update note:", error);
+    //     }
+    //   },
+    editNote: builder.mutation({
+      query: (noteId, noteData) => ({
+        url: `${NOTE_URL}/update-note`,
+        method: "PUT",
+        body: { _id: noteId, ...noteData },
+      }),
+    }),
+    deleteNote: builder.mutation({
+      query: (noteId) => ({
+        url: `${NOTE_URL}/delete-note`,
+        method: "DELETE",
+        body: { _id: noteId },
+      }),
+    }),
+    addFavNote: builder.mutation({
+      query: (noteId) => ({
+        url: `${NOTE_URL}/addFavorite`,
+        method: "PUT",
+        body: { _id: noteId },
+      }),
+    }),
+    getFavNotes: builder.mutation({
+      query: () => ({
+        url: `${NOTE_URL}/favNotes`,
+        method: "GET",
+      }),
+    }),
+  }),
+});
+
+export const { useLoginMutation, useLogoutMutation, useRefreshtokenMutation } =
+  authApiSlice;
+
+export const {
+  useCurrentUserMutation,
+  useUpdateProfileMutation,
+  usePasswordUpdateMutation,
+  useAccountDeactivateMutation,
+  useAccountActivateMutation,
+  useDeleteAccountMutation,
+} = userApiSlice;
+
+export const {
+  useGetAllNotesMutation,
+  useAddNoteMutation,
+  useEditNoteMutation,
+  useDeleteNoteMutation,
+  useAddFavNoteMutation,
+  useGetFavNotesMutation,
+} = noteApiSlice;

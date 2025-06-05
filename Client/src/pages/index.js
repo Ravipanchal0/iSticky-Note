@@ -5,6 +5,7 @@ import LoginPage from "./LoginPage";
 import SignupPage from "./SignupPage";
 import AllNotesPage from "./AllNotesPage";
 import AddNotePage from "./AddNotePage";
+import ProfilePage from "./ProfilePage";
 
 export {
   HomePage,
@@ -14,4 +15,5 @@ export {
   SignupPage,
   AllNotesPage,
   AddNotePage,
+  ProfilePage,
 };

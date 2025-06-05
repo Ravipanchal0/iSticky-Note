@@ -17,7 +17,6 @@ const AuthLayout = ({ children, authentication = true }) => {
       const response = await authServices.loginByAccessToken();
       if (response.data.success) {
         dispatch(login(response.data));
-        navigate("/dashboard");
       }
     } catch (error) {
       navigate("/login");

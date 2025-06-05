@@ -46,6 +46,7 @@ class AuthServices {
         {},
         { withCredentials: true }
       );
+      console.log("Logout successfully : ", response);
       return response.data;
     } catch (error) {
       const errorMessage =

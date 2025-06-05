@@ -12,6 +12,7 @@ import AllNotes from "./note/AllNotes";
 import NoteCard from "./note/NoteCard";
 import NoteForm from "./note/NoteForm";
 import About from "./about/About";
+import Profile from "./auth/Profile";
 
 export {
   Container,
@@ -28,4 +29,5 @@ export {
   NoteCard,
   NoteForm,
   About,
+  Profile,
 };

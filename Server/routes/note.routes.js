@@ -13,7 +13,7 @@ import {
 
 const router = express.Router();
 
-router.route("/add-note").post(verifyAccessToken, createNote);
+router.route("/addNote").post(verifyAccessToken, createNote);
 router.route("/getNotes").get(verifyAccessToken, getAllNoteOfUser);
 router.route("/favNotes").get(verifyAccessToken, getFavNotes);
 router.route("/update-note").put(updateNote);

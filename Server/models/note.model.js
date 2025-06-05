@@ -34,6 +34,8 @@ const noteSchema = new Schema(
       ],
       default: "personal",
       index: true,
+      lowercase: true,
+      trim: true,
     },
     userId: {
       type: Schema.Types.ObjectId,

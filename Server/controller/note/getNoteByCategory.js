@@ -8,7 +8,10 @@ const getNoteByCategory = asyncHandler(async (req, res) => {
     category = personal;
   }
 
-  const notes = await Note.find({ userId: req.user._id, category });
+  const notes = await Note.find({
+    userId: req.user._id,
+    category: category.toLowerCase().trim(),
+  });
 
   if (!notes.length) {
     throw new ApiError(400, `No notes found for category: ${category}`);

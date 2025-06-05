@@ -1,12 +1,16 @@
-import React, { useState, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Input from "../utilities/Input.jsx";
 import Button from "../utilities/Button.jsx";
-import authServices from "../../controller/auth.js";
 import { login as authLogin } from "../../store/authSlice.js";
-import noteServices from "../../controller/note.js";
 import { setNotes } from "../../store/noteSlice.js";
+
+import { useDispatch } from "react-redux";
+import {
+  useGetAllNotesMutation,
+  useLoginMutation,
+} from "../../store/authApiSlice.js";
+import Loader from "../utilities/Loader.jsx";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -15,24 +19,27 @@ const Login = () => {
   const loginRef = useRef();
   const passwordRef = useRef();
 
-  async function getAllNotes() {
-    const response = await noteServices.getAllNotes();
-    if (response.notes) {
-      dispatch(setNotes(response.notes));
+  const [login, { isLoading: loginLoader }] = useLoginMutation();
+  const [getAllNotes, { isLoading: notesLoader }] = useGetAllNotesMutation();
+
+  async function fetchAllNotes() {
+    const response = await getAllNotes();
+    if (response.data.data.notes) {
+      dispatch(setNotes(response.data.data.notes));
     }
   }
 
-  const login = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
     try {
-      const session = await authServices.login({
+      const session = await login({
         loginId: loginRef.current.value,
         password: passwordRef.current.value,
       });
       if (session) {
         dispatch(authLogin(session.data.user));
-        await getAllNotes();
+        await fetchAllNotes();
         navigate("/dashboard");
       }
     } catch (error) {
@@ -42,6 +49,7 @@ const Login = () => {
 
   return (
     <div className="w-full h-full flex justify-center items-center ">
+      {(loginLoader || notesLoader) && <Loader />}
       <div className="container z-10 w-lg shadow bg-gray-100 p-5 rounded-lg border border-gray-300">
         <div className="header text-center relative">
           <h2 className="text-slate-800 text-2xl font-bold underline underline-offset-2 mb-2">
@@ -54,7 +62,7 @@ const Login = () => {
         <div className="error w-full my-4 text-center">
           <p className=" text-red-600 text-sm">{error}</p>
         </div>
-        <form onSubmit={login} className="flex flex-col gap-3">
+        <form onSubmit={handleLogin} className="flex flex-col gap-3">
           <Input
             label="Username or Email : "
             placeholder="Enter your username or email"

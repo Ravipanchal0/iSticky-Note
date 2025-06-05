@@ -19,6 +19,7 @@ import {
   HomePage,
   LoginPage,
   SignupPage,
+  ProfilePage,
 } from "./pages/index.js";
 
 const router = createBrowserRouter(
@@ -52,6 +53,12 @@ const router = createBrowserRouter(
         path="addNote"
         element={
           <AuthLayout children={<AddNotePage />} authentication={true} />
+        }
+      />
+      <Route
+        path="profile"
+        element={
+          <AuthLayout children={<ProfilePage />} authentication={true} />
         }
       />
     </Route>

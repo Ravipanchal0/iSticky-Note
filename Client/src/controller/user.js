@@ -69,5 +69,5 @@ class UserServices {
   }
 }
 
-const userservices = new UserServices();
-export default userservices;
+const userServices = new UserServices();
+export default userServices;
