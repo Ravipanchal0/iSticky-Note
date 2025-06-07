@@ -55,7 +55,6 @@ const AllNotes = () => {
       setCurrentNotes(currentPageNotes);
       setTotalPages(Math.ceil(allNotes.length / notesPerPage));
     }
-    console.log("current Notes : ", currentNotes);
   }, [allNotes, currentPage]);
 
   const handleFilterByTime = (time) => {
@@ -80,88 +79,90 @@ const AllNotes = () => {
   }, [orderFilter]);
 
   return (
-    <div className="relative w-full py-3 px-5 my-7">
-      {/* {isLoading && <Loader />} */}
-      {/* // Page Header */}
-      <div className="page-header flex justify-between items-center">
-        <div className="page-title">
-          <h3 className="title text-3xl font-semibold">All Notes</h3>
-          <p className="desc text-sm text-gray-600 italic">
-            Your entire collection of notes is right here.
-          </p>
+    <div className="w-full h-full">
+      {isLoading && <Loader />}
+      <div className="relative w-full py-3 px-5 my-7">
+        {/* // Page Header */}
+        <div className="page-header flex justify-between items-center">
+          <div className="page-title">
+            <h3 className="title text-3xl font-semibold">All Notes</h3>
+            <p className="desc text-sm text-gray-600 italic">
+              Your entire collection of notes is right here.
+            </p>
+          </div>
+          <div className="addNote">
+            <NavLink to="/addNote">
+              <button className="addNoteBtn px-2 py-1 bg-blue-500 text-white font-semibold tracking-wider rounded shadow-md hover:bg-blue-600 transition duration-200  hover:cursor-pointer">
+                + Add Note
+              </button>
+            </NavLink>
+          </div>
         </div>
-        <div className="addNote">
-          <NavLink to="/addNote">
-            <button className="addNoteBtn px-2 py-1 bg-blue-500 text-white font-semibold tracking-wider rounded shadow-md hover:bg-blue-600 transition duration-200  hover:cursor-pointer">
-              + Add Note
+
+        {/* // Filter and Order by */}
+        <div className="filter w-full p-4 rounded bg-white shadow flex justify-between items-center mt-4">
+          <div className="category gap-x-2 flex items-center">
+            <label htmlFor="category" className="">
+              Filter by:
+            </label>
+            <button
+              onClick={handleAllNotes}
+              className="px-2 py-0.5 text-sm  hover:cursor-pointer text-purple-500 bg-purple-300/30 rounded"
+            >
+              All Notes
             </button>
-          </NavLink>
+            <button
+              onClick={handleFavNotes}
+              className="px-2 py-0.5 text-sm bg-slate-500/40 hover:cursor-pointer hover:text-pink-500 hover:bg-pink-300/30 rounded"
+            >
+              Favorites
+            </button>
+          </div>
+          <div className="order-by">
+            <label htmlFor="order">Order by:</label>
+            <select
+              id="order"
+              onChange={(e) => {
+                setOrderFilter(e.target.value);
+                handleFilterByTime(e.target.value);
+              }}
+              value={orderFilter}
+              className="ml-2 px-2 py-0.5 border border-slate-300 outline-none rounded"
+            >
+              <option value="new">Newest</option>
+              <option value="old">Oldest</option>
+            </select>
+          </div>
         </div>
-      </div>
 
-      {/* // Filter and Order by */}
-      <div className="filter w-full p-4 rounded bg-white shadow flex justify-between items-center mt-4">
-        <div className="category gap-x-2 flex items-center">
-          <label htmlFor="category" className="">
-            Filter by:
-          </label>
-          <button
-            onClick={handleAllNotes}
-            className="px-2 py-0.5 text-sm  hover:cursor-pointer text-purple-500 bg-purple-300/30 rounded"
-          >
-            All Notes
-          </button>
-          <button
-            onClick={handleFavNotes}
-            className="px-2 py-0.5 text-sm bg-slate-500/40 hover:cursor-pointer hover:text-pink-500 hover:bg-pink-300/30 rounded"
-          >
-            Favorites
-          </button>
+        {/* // Note Cards */}
+        <div className="w-full grid lg:grid-cols-3 grid-cols-1 gap-4 my-10">
+          {currentNotes.map((note) => (
+            <NoteCard key={note._id} note={note} />
+          ))}
         </div>
-        <div className="order-by">
-          <label htmlFor="order">Order by:</label>
-          <select
-            id="order"
-            onChange={(e) => {
-              setOrderFilter(e.target.value);
-              handleFilterByTime(e.target.value);
+
+        {/* // Pagination */}
+        <div className="pagination absolute right-5 bottom-0 flex gap-x-2">
+          <button
+            onClick={() => {
+              if (currentPage > 1) setCurrentPage(currentPage - 1);
             }}
-            value={orderFilter}
-            className="ml-2 px-2 py-0.5 border border-slate-300 outline-none rounded"
+            disabled={currentPage <= 1}
+            className="previous size-8 rounded bg-gray-200/60 flex items-center justify-center hover:cursor-pointer hover:bg-slate-200 transition duration-200"
           >
-            <option value="new">Newest</option>
-            <option value="old">Oldest</option>
-          </select>
+            <FaAngleLeft />
+          </button>
+          <button
+            onClick={() => {
+              if (currentPage < totalPages) setCurrentPage(currentPage + 1); // Update to use totalPages
+            }}
+            disabled={currentPage >= totalPages}
+            className="next size-8 rounded bg-gray-200/60 flex items-center justify-center hover:cursor-pointer hover:bg-slate-200 transition duration-200"
+          >
+            <FaAngleRight />
+          </button>
         </div>
-      </div>
-
-      {/* // Note Cards */}
-      <div className="w-full grid lg:grid-cols-3 grid-cols-1 gap-4 my-10">
-        {currentNotes.map((note) => (
-          <NoteCard key={note._id} note={note} />
-        ))}
-      </div>
-
-      {/* // Pagination */}
-      <div className="pagination absolute right-5 bottom-0 flex gap-x-2">
-        <button
-          onClick={() => {
-            if (currentPage > 1) setCurrentPage(currentPage - 1);
-          }}
-          disabled={currentPage <= 1}
-          className="previous size-8 rounded bg-gray-200/60 flex items-center justify-center hover:cursor-pointer hover:bg-slate-200 transition duration-200"
-        >
-          <FaAngleLeft />
-        </button>
-        <button
-          onClick={() => {
-            if (currentPage < totalPages) setCurrentPage(currentPage + 1); // Update to use totalPages
-          }}
-          disabled={currentPage >= totalPages}
-          className="next size-8 rounded bg-gray-200/60 flex items-center justify-center hover:cursor-pointer hover:bg-slate-200 transition duration-200"
-        >
-          <FaAngleRight />
-        </button>
       </div>
     </div>
   );

@@ -6,15 +6,18 @@ const createNote = asyncHandler(async (req, res) => {
   // validation
   // create a note and save it into db
   // resturn response
+  console.log("Backend body : ", req.body);
+  const { title, category, content } = req.body;
 
-  const { title, content, category } = req.body;
-
-  if (!content?.trim() && !title?.trim()) {
-    throw new ApiError(400, "Note content is required");
+  if ([title, category, content].some((field) => !field)) {
+    throw new ApiError(400, "All fields are required");
   }
 
   // using middleware - auth.middleware.js
   const user = req.user;
+  if (!user) {
+    throw new ApiError(401, "Unauthorized access");
+  }
 
   const note = await Note.create({
     title,
