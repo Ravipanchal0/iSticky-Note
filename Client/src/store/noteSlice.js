@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   notes: [],
   favNotes: [],
+  categories: null,
 };
 
 const noteSlice = createSlice({
@@ -13,6 +14,9 @@ const noteSlice = createSlice({
       state.notes = action.payload;
       state.favNotes = action.payload?.filter(
         (note) => note?.isStarred === true
+      );
+      state.categories = Array.from(
+        new Set(action.payload?.map((note) => note.category))
       );
     },
     addNote: (state, action) => {
