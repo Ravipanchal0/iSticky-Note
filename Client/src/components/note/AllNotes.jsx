@@ -79,9 +79,9 @@ const AllNotes = () => {
   }, [orderFilter]);
 
   return (
-    <div className="w-full h-full">
+    <>
       {isLoading && <Loader />}
-      <div className="relative w-full py-3 px-5 my-7">
+      <div className="notes relative w-full h-full">
         {/* // Page Header */}
         <div className="page-header flex justify-between items-center">
           <div className="page-title">
@@ -91,7 +91,7 @@ const AllNotes = () => {
             </p>
           </div>
           <div className="addNote">
-            <NavLink to="/addNote">
+            <NavLink to="/create-note">
               <button className="addNoteBtn px-2 py-1 bg-blue-500 text-white font-semibold tracking-wider rounded shadow-md hover:bg-blue-600 transition duration-200  hover:cursor-pointer">
                 + Add Note
               </button>
@@ -135,36 +135,38 @@ const AllNotes = () => {
           </div>
         </div>
 
-        {/* // Note Cards */}
-        <div className="w-full grid lg:grid-cols-3 grid-cols-1 gap-4 my-10">
-          {currentNotes.map((note) => (
-            <NoteCard key={note._id} note={note} />
-          ))}
-        </div>
+        <div className="card-container">
+          {/* // Pagination */}
+          <div className="pagination flex justify-end gap-x-2 mt-4 mb-2">
+            <button
+              onClick={() => {
+                if (currentPage > 1) setCurrentPage(currentPage - 1);
+              }}
+              disabled={currentPage <= 1}
+              className="previous size-8 rounded bg-gray-200/60 flex items-center justify-center hover:cursor-pointer hover:bg-slate-200 transition duration-200"
+            >
+              <FaAngleLeft />
+            </button>
+            <button
+              onClick={() => {
+                if (currentPage < totalPages) setCurrentPage(currentPage + 1); // Update to use totalPages
+              }}
+              disabled={currentPage >= totalPages}
+              className="next size-8 rounded bg-gray-200/60 flex items-center justify-center hover:cursor-pointer hover:bg-slate-200 transition duration-200"
+            >
+              <FaAngleRight />
+            </button>
+          </div>
 
-        {/* // Pagination */}
-        <div className="pagination absolute right-5 bottom-0 flex gap-x-2">
-          <button
-            onClick={() => {
-              if (currentPage > 1) setCurrentPage(currentPage - 1);
-            }}
-            disabled={currentPage <= 1}
-            className="previous size-8 rounded bg-gray-200/60 flex items-center justify-center hover:cursor-pointer hover:bg-slate-200 transition duration-200"
-          >
-            <FaAngleLeft />
-          </button>
-          <button
-            onClick={() => {
-              if (currentPage < totalPages) setCurrentPage(currentPage + 1); // Update to use totalPages
-            }}
-            disabled={currentPage >= totalPages}
-            className="next size-8 rounded bg-gray-200/60 flex items-center justify-center hover:cursor-pointer hover:bg-slate-200 transition duration-200"
-          >
-            <FaAngleRight />
-          </button>
+          {/* // Note Cards */}
+          <div className="w-full grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
+            {currentNotes.map((note) => (
+              <NoteCard key={note._id} note={note} />
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

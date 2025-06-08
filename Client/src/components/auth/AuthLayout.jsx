@@ -49,7 +49,7 @@ const AuthLayout = ({ children, authentication = true }) => {
   return isRefreshing ? (
     <Loader />
   ) : (
-    <div className="w-full p-5">{children}</div>
+    <div className="auth-layout w-full">{children}</div>
   );
 };
 

@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import Note from "./Note.jsx";
 
 import {
-  useEditNoteMutation,
   useDeleteNoteMutation,
   useCompleteNoteMutation,
   useAddFavNoteMutation,
@@ -26,13 +25,12 @@ import {
 } from "../../assets/icons.js";
 
 const NoteCard = (note) => {
-  const { title, category, time, content, isStarred, isCompleted, createdAt } =
+  const { title, category, content, isStarred, isCompleted, createdAt } =
     note.note;
   const [showFullNote, setShowFullNote] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [editNote] = useEditNoteMutation();
   const [deleteNote] = useDeleteNoteMutation();
   const [addFavNote] = useAddFavNoteMutation();
   const [completeNote] = useCompleteNoteMutation();
@@ -69,52 +67,56 @@ const NoteCard = (note) => {
 
   return (
     <>
-      <div className="bg-gray-200/40 px-4 py-3 rounded-lg flex flex-col shadow-sm">
-        <div className="title flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <h2 className="font-semibold text-lg -mb-1">
-              {title.charAt(0).toUpperCase() + title.slice(1)}
-            </h2>
-            <p
-              title="Category"
-              className="category text-sm bg-slate-300 rounded px-2"
-            >
-              {category.charAt(0).toUpperCase() + category.slice(1)}
-            </p>
+      <div className="note-card bg-gray-200/40 px-4 py-3 rounded-lg h-full flex flex-col justify-between shadow-sm">
+        <div className="card-content">
+          <div className="title flex justify-between items-center">
+            <div className="flex items-center gap-2">
+              <h2 className="font-semibold text-lg -mb-1">
+                {title.charAt(0).toUpperCase() + title.slice(1)}
+              </h2>
+              <p
+                title="Category"
+                className="category text-sm bg-slate-300 rounded px-2"
+              >
+                {category.charAt(0).toUpperCase() + category.slice(1)}
+              </p>
+            </div>
+            <div className="favorite">
+              {isStarred ? (
+                <FaStar
+                  title="Favorite"
+                  className="text-yellow-500 text-xl cursor-pointer hover:text-gray-500"
+                  onClick={handleAddFavNote}
+                />
+              ) : (
+                <FaRegStar
+                  title="Favorite"
+                  className="text-gray-500 hover:text-yellow-500 text-xl cursor-pointer"
+                  onClick={handleAddFavNote}
+                />
+              )}
+            </div>
           </div>
-          <div className="favorite">
-            {isStarred ? (
-              <FaStar
-                title="Favorite"
-                className="text-yellow-500 text-xl cursor-pointer hover:text-gray-500"
-                onClick={handleAddFavNote}
-              />
+          <p className="time text-xs text-gray-600 mb-0.5 ml-1">
+            {createdAt.split("T")[0]}
+          </p>
+          <p className="content ml-1">
+            {content?.length > 80 ? (
+              <>
+                {content.slice(0, 80)}
+                <button
+                  className="text-blue-500 ml-1 underline cursor-pointer text-sm"
+                  onClick={() => setShowFullNote(true)}
+                >
+                  ...see more
+                </button>
+              </>
             ) : (
-              <FaRegStar
-                title="Favorite"
-                className="text-gray-500 hover:text-yellow-500 text-xl cursor-pointer"
-                onClick={handleAddFavNote}
-              />
+              content
             )}
-          </div>
+          </p>
         </div>
 
-        <span className="time text-sm text-gray-600 mb-2">{time}</span>
-        <p className="content">
-          {content?.length > 100 ? (
-            <>
-              {content.slice(0, 100)}
-              <button
-                className="text-blue-500 ml-1 underline cursor-pointer"
-                onClick={() => setShowFullNote(true)}
-              >
-                ...see more
-              </button>
-            </>
-          ) : (
-            content
-          )}
-        </p>
         <div className="actions flex justify-between items-center mt-3">
           <div className="left">
             <div className="mark-as-completed">

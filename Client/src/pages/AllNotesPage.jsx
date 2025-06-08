@@ -2,11 +2,7 @@ import React from "react";
 import { Container, AllNotes as AllNotesComponent } from "../components";
 
 const AllNotesPage = () => {
-  return (
-    <Container>
-      <AllNotesComponent />
-    </Container>
-  );
+  return <AllNotesComponent />;
 };
 
 export default AllNotesPage;

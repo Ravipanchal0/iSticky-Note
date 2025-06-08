@@ -18,7 +18,7 @@ const Sidebar = () => {
     { name: "Reminders", textColor: "text-green-600" },
   ];
   return (
-    <div className="navbar w-xs bg-slate-100 border-r border-gray-400 h-full">
+    <div className="navbar w-xs h-auto bg-slate-100 border-r border-gray-400">
       <ul className="flex flex-col gap-4 px-4 pt-10">
         <NavLink to="/dashboard">
           {({ isActive }) => (
@@ -74,7 +74,10 @@ const Sidebar = () => {
         </label>
         <ul className="flex flex-col gap-1 px-6">
           {categories.map((category) => (
-            <li className={`${category.textColor} flex gap-3 items-center`}>
+            <li
+              key={category.name}
+              className={`${category.textColor} flex gap-3 items-center`}
+            >
               <VscDebugBreakpointData className={`${category.textColor}`} />
               {category.name}
             </li>

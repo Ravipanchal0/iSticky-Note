@@ -132,7 +132,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="h-full flex justify-center items-center">
+    <>
       {(logoutLoader ||
         passwordUpdateLoader ||
         updateProfileLoader ||
@@ -165,54 +165,56 @@ const Profile = () => {
           userError={userError}
         />
       )}
-      <div className="w-3xl p-10 flex flex-col gap-5 box border border-gray-300 shadow rounded backdrop-blur-md bg-white/30">
-        <button
-          onClick={handleUpdateModal}
-          className="w-full border border-gray-200 hover:bg-gray-200 rounded bg-gray-100 text-md px-5 py-3 cursor-pointer"
-        >
-          Details Update
-        </button>
-        <button
-          onClick={handlechangePasswordModal}
-          className="w-full border border-gray-200 hover:bg-gray-200 rounded bg-gray-100 text-md px-5 py-3 cursor-pointer"
-        >
-          Change Password
-        </button>
-        <button
-          onClick={() =>
-            openConfirmModal({
-              title: "Confirm Deactivation",
-              desc: "Are you sure you want to deactivate your account?",
-              btnTitle: "Deactivate",
-              onConfirm: handleDeleteAccount,
-            })
-          }
-          className="w-full border border-gray-200 hover:bg-gray-200 rounded bg-gray-100 text-md px-5 py-3 cursor-pointer"
-        >
-          Deactivate Account
-        </button>
-        <button
-          onClick={handleLogout}
-          className="w-full border border-gray-200 hover:bg-gray-200 rounded bg-gray-100 text-md px-5 py-3 cursor-pointer"
-        >
-          Log Out
-        </button>
+      <div className="profile h-full flex justify-center items-center">
+        <div className="w-3xl p-10 flex flex-col gap-5 box border border-gray-300 shadow rounded backdrop-blur-md bg-white/30">
+          <button
+            onClick={handleUpdateModal}
+            className="w-full border border-gray-200 hover:bg-gray-200 rounded bg-gray-100 text-md px-5 py-3 cursor-pointer"
+          >
+            Details Update
+          </button>
+          <button
+            onClick={handlechangePasswordModal}
+            className="w-full border border-gray-200 hover:bg-gray-200 rounded bg-gray-100 text-md px-5 py-3 cursor-pointer"
+          >
+            Change Password
+          </button>
+          <button
+            onClick={() =>
+              openConfirmModal({
+                title: "Confirm Deactivation",
+                desc: "Are you sure you want to deactivate your account?",
+                btnTitle: "Deactivate",
+                onConfirm: handleDeleteAccount,
+              })
+            }
+            className="w-full border border-gray-200 hover:bg-gray-200 rounded bg-gray-100 text-md px-5 py-3 cursor-pointer"
+          >
+            Deactivate Account
+          </button>
+          <button
+            onClick={handleLogout}
+            className="w-full border border-gray-200 hover:bg-gray-200 rounded bg-gray-100 text-md px-5 py-3 cursor-pointer"
+          >
+            Log Out
+          </button>
 
-        <button
-          onClick={() =>
-            openConfirmModal({
-              title: "Delete Account",
-              desc: "Are you sure you want to delete your account? This action cannot be undone.",
-              btnTitle: "Delete",
-              onConfirm: handleDeactivateAccount,
-            })
-          }
-          className="w-full text-red-500 border border-gray-200 hover:bg-red-500 hover:text-white rounded bg-gray-100 text-md px-5 py-3 cursor-pointer transiton duration-300 ease-in-out"
-        >
-          Delete Account
-        </button>
+          <button
+            onClick={() =>
+              openConfirmModal({
+                title: "Delete Account",
+                desc: "Are you sure you want to delete your account? This action cannot be undone.",
+                btnTitle: "Delete",
+                onConfirm: handleDeactivateAccount,
+              })
+            }
+            className="w-full text-red-500 border border-gray-200 hover:bg-red-500 hover:text-white rounded bg-gray-100 text-md px-5 py-3 cursor-pointer transiton duration-300 ease-in-out"
+          >
+            Delete Account
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

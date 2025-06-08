@@ -14,14 +14,13 @@ import {
 } from "../../assets/icons.js";
 
 import { useGetAllNotesMutation } from "../../store/authApiSlice.js";
+import Loader from "../utilities/Loader.jsx";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const { favNotes, notes } = useSelector((state) => state.note);
   const [getAllNotes, { isLoading }] = useGetAllNotesMutation();
-
-  console.count("dashboard");
 
   useEffect(() => {
     (async () => {
@@ -103,13 +102,13 @@ const Dashboard = () => {
 
   return (
     <>
-      {isLoading && <div>Loading...</div>}
-      <div className="w-full my-5 p-3">
+      {isLoading && <Loader />}
+      <div className="dashboard w-full h-full">
         {/*  Dashboard title */}
         <div className="page-title">
           <h3 className="title text-3xl font-semibold">Dashboard</h3>
           <p className="desc text-sm text-gray-600 italic ">
-            Welcome back,
+            Welcome back,&nbsp;
             <span className="text-sky-600 font-semibold">
               {user?.fullName || "My User"}
             </span>

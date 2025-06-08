@@ -1,13 +1,11 @@
-import React from "react";
 import Button from "../utilities/Button";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const Home = () => {
   const { authStatus, user } = useSelector((state) => state.auth);
-  console.log(user);
   return (
-    <div className="flex flex-col items-center justify-center h-screen p-4">
+    <div className="home w-full h-full flex flex-col items-center justify-center p-4">
       <h1 className="text-6xl font-bold mb-3 text-center">
         Welcome to&nbsp;
         <span className="text-blue-500 italic">

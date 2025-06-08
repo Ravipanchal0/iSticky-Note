@@ -61,13 +61,12 @@ const NoteForm = () => {
         }
       }
     } catch (err) {
-      console.log(err);
       setError(err.data.message);
     }
   };
 
   return (
-    <div className="w-full h-full flex justify-center items-center">
+    <div className="note-form w-full h-full flex justify-center items-center">
       <div className="container z-10 w-2xl shadow bg-gray-100 p-5 rounded-lg border border-gray-300">
         <div className="header text-center relative">
           <h2 className="text-slate-800 text-2xl font-bold underline underline-offset-2 mb-2">

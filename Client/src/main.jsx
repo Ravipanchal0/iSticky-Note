@@ -21,53 +21,59 @@ import {
   SignupPage,
   ProfilePage,
 } from "./pages/index.js";
+import Error_404 from "./components/utilities/Error_404.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<App />}>
-      <Route path="" element={<HomePage />} />
-      <Route path="about" element={<AboutPage />} />
-      <Route
-        path="login"
-        element={<AuthLayout children={<LoginPage />} authentication={false} />}
-      />
-      <Route
-        path="register"
-        element={
-          <AuthLayout children={<SignupPage />} authentication={false} />
-        }
-      />
-      <Route
-        path="dashboard"
-        element={
-          <AuthLayout children={<DashboardPage />} authentication={true} />
-        }
-      />
-      <Route
-        path="notes"
-        element={
-          <AuthLayout children={<AllNotesPage />} authentication={true} />
-        }
-      />
-      <Route
-        path="create-note"
-        element={
-          <AuthLayout children={<AddNotePage />} authentication={true} />
-        }
-      />
-      <Route
-        path="note/:id"
-        element={
-          <AuthLayout children={<AddNotePage />} authentication={true} />
-        }
-      />
-      <Route
-        path="profile"
-        element={
-          <AuthLayout children={<ProfilePage />} authentication={true} />
-        }
-      />
-    </Route>
+    <>
+      <Route path="/" element={<App />}>
+        <Route path="" element={<HomePage />} />
+        <Route path="about" element={<AboutPage />} />
+        <Route
+          path="login"
+          element={
+            <AuthLayout children={<LoginPage />} authentication={false} />
+          }
+        />
+        <Route
+          path="register"
+          element={
+            <AuthLayout children={<SignupPage />} authentication={false} />
+          }
+        />
+        <Route
+          path="dashboard"
+          element={
+            <AuthLayout children={<DashboardPage />} authentication={true} />
+          }
+        />
+        <Route
+          path="notes"
+          element={
+            <AuthLayout children={<AllNotesPage />} authentication={true} />
+          }
+        />
+        <Route
+          path="create-note"
+          element={
+            <AuthLayout children={<AddNotePage />} authentication={true} />
+          }
+        />
+        <Route
+          path="note/:id"
+          element={
+            <AuthLayout children={<AddNotePage />} authentication={true} />
+          }
+        />
+        <Route
+          path="profile"
+          element={
+            <AuthLayout children={<ProfilePage />} authentication={true} />
+          }
+        />
+      </Route>
+      <Route path="*" element={<Error_404 />} />
+    </>
   )
 );
 

@@ -1,25 +1,23 @@
 import "./App.css";
 import { Outlet } from "react-router-dom";
-import { Container } from "./components/index.js";
+import { useSelector } from "react-redux";
+import { Container, Sidebar } from "./components/index.js";
 
 import { Header, Footer } from "./components/index.js";
 
 function App() {
+  const authStatus = useSelector((state) => state.auth.authStatus);
   return (
-    <div className="w-full flex flex-col">
-      <div className="header w-full">
-        <Header />
-      </div>
-
-      <main className="w-full">
+    <div className="w-full min-h-screen flex flex-col">
+      <Header />
+      <main className="w-full flex flex-1">
+        {authStatus && <Sidebar />}
         <Container>
           <Outlet />
         </Container>
       </main>
 
-      <div className="footer ">
-        <Footer />
-      </div>
+      <Footer />
     </div>
   );
 }

@@ -3,7 +3,7 @@ import React from "react";
 const DashboardCard = ({ icon, bgColor, borderColor, title, noOfNotes }) => {
   return (
     <div
-      className={`card flex gap-4 items-center  bg-white p-4 rounded-xl border-l-5 ${borderColor} shadow-md`}
+      className={`dashboard-card flex gap-4 items-center  bg-white p-4 rounded-xl border-l-5 ${borderColor} shadow-md`}
     >
       <div
         className={`flex items-center justify-center ${bgColor} rounded-full size-10`}
