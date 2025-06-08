@@ -103,16 +103,23 @@ export const noteApiSlice = apiSlice.injectEndpoints({
     //     }
     //   },
     editNote: builder.mutation({
-      query: (noteId, noteData) => ({
+      query: (note) => ({
         url: `${NOTE_URL}/update-note`,
         method: "PUT",
-        body: { _id: noteId, ...noteData },
+        body: note,
       }),
     }),
     deleteNote: builder.mutation({
       query: (noteId) => ({
         url: `${NOTE_URL}/delete-note`,
         method: "DELETE",
+        body: { _id: noteId },
+      }),
+    }),
+    completeNote: builder.mutation({
+      query: (noteId) => ({
+        url: `${NOTE_URL}/completeNote`,
+        method: "PUT",
         body: { _id: noteId },
       }),
     }),
@@ -153,6 +160,7 @@ export const {
   useCreateNoteMutation,
   useEditNoteMutation,
   useDeleteNoteMutation,
+  useCompleteNoteMutation,
   useAddFavNoteMutation,
   useGetFavNotesMutation,
 } = noteApiSlice;

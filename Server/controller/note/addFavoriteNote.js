@@ -10,7 +10,7 @@ const addFavoriteNote = async (req, res) => {
     throw new ApiError(404, "Note does not exist!");
   }
 
-  note.isStarred = true;
+  note.isStarred = !note.isStarred;
   await note.save({ validateBeforeSave: false });
 
   return res

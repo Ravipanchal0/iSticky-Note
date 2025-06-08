@@ -6,7 +6,6 @@ const createNote = asyncHandler(async (req, res) => {
   // validation
   // create a note and save it into db
   // resturn response
-  console.log("Backend body : ", req.body);
   const { title, category, content } = req.body;
 
   if ([title, category, content].some((field) => !field)) {

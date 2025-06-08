@@ -1,5 +1,5 @@
 import createNote from "./createNote.js";
-import updateNote from "./updateNote.js";
+import editNote from "./editNote.js";
 import getAllNoteOfUser from "./getAllNotes.js";
 import getNoteByCategory from "./getNoteByCategory.js";
 import addFavoriteNote from "./addFavoriteNote.js";
@@ -9,7 +9,7 @@ import getFavNotes from "./getFavNotes.js";
 
 export {
   createNote,
-  updateNote,
+  editNote,
   getAllNoteOfUser,
   getNoteByCategory,
   addFavoriteNote,

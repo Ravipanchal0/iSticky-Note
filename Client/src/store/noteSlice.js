@@ -20,9 +20,29 @@ const noteSlice = createSlice({
     },
     deleteNote: (state, action) => {
       state.notes = state.notes.filter((note) => note._id !== action.payload);
+      state.favNotes = state.favNotes.filter(
+        (note) => note._id !== action.payload
+      );
+    },
+    toggleStar: (state, action) => {
+      state.notes = state.notes.map((note) =>
+        note._id === action.payload
+          ? { ...note, isStarred: !note.isStarred }
+          : note
+      );
+      // Recalculate favorites
+      state.favNotes = state.notes.filter((note) => note.isStarred);
+    },
+    toggleComplete: (state, action) => {
+      state.notes = state.notes.map((note) =>
+        note._id === action.payload
+          ? { ...note, isCompleted: !note.isCompleted }
+          : note
+      );
     },
   },
 });
 
-export const { setNotes, addNote, deleteNote } = noteSlice.actions;
+export const { setNotes, addNote, deleteNote, toggleStar, toggleComplete } =
+  noteSlice.actions;
 export default noteSlice.reducer;

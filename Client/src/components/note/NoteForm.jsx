@@ -1,14 +1,22 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { addNote } from "../../store/noteSlice.js";
 
 import Button from "../utilities/Button";
-import { useCreateNoteMutation } from "../../store/authApiSlice.js";
+import {
+  useCreateNoteMutation,
+  useEditNoteMutation,
+} from "../../store/authApiSlice.js";
 
 const NoteForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { id } = useParams();
+  const isEditing = Boolean(id);
+  const { notes } = useSelector((state) => state.note);
+
   const [error, setError] = useState("");
   const [noteData, setNoteData] = useState({
     title: "",
@@ -17,19 +25,40 @@ const NoteForm = () => {
   });
 
   const [createNote, { isLoading }] = useCreateNoteMutation();
+  const [editNote] = useEditNoteMutation();
 
   const handleChange = (e) => {
     setNoteData({ ...noteData, [e.target.name]: e.target.value });
   };
 
+  useEffect(() => {
+    if (isEditing) {
+      const noteToEdit = notes.find((note) => note._id === id);
+      if (noteToEdit) {
+        setNoteData({
+          title: noteToEdit.title,
+          category: noteToEdit.category,
+          content: noteToEdit.content,
+        });
+      }
+    }
+  }, [id, isEditing, notes]);
+
   const handleAddNote = async (e) => {
     e.preventDefault();
     setError("");
     try {
-      const response = await createNote(noteData).unwrap();
-      if (response) {
-        dispatch(addNote(response.data));
-        navigate("/allNotes");
+      if (isEditing) {
+        const response = await editNote({ _id: id, ...noteData }).unwrap();
+        if (response) {
+          navigate("/allNotes");
+        }
+      } else {
+        const response = await createNote(noteData).unwrap();
+        if (response) {
+          dispatch(addNote(response.data));
+          navigate("/allNotes");
+        }
       }
     } catch (err) {
       console.log(err);
@@ -109,7 +138,7 @@ const NoteForm = () => {
           </div>
           <Button
             type="submit"
-            children="Add Note"
+            children={isEditing ? "Update Note" : "Add Note"}
             bgColor="bg-slate-700"
             className="w-full cursor-pointer hover:bg-slate-800 duration-200 font-semibold tracking-wider"
           />

@@ -1,4 +1,19 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import {
+  useEditNoteMutation,
+  useDeleteNoteMutation,
+  useCompleteNoteMutation,
+  useAddFavNoteMutation,
+} from "../../store/authApiSlice.js";
+
+import {
+  deleteNote as deleteNoteAction,
+  toggleComplete,
+  toggleStar,
+} from "../../store/noteSlice.js";
 
 import {
   FaRegStar,
@@ -10,41 +25,112 @@ import {
 } from "../../assets/icons.js";
 
 const NoteCard = (note) => {
-  const { title, time, content, isStarred, isCompleted } = note.note;
+  const { title, category, time, content, isStarred, isCompleted } = note.note;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [editNote] = useEditNoteMutation();
+  const [deleteNote] = useDeleteNoteMutation();
+  const [addFavNote] = useAddFavNoteMutation();
+  const [completeNote] = useCompleteNoteMutation();
+
+  const handleAddFavNote = async () => {
+    try {
+      await addFavNote(note.note?._id);
+      dispatch(toggleStar(note.note?._id));
+    } catch (error) {
+      console.error("Error adding favorite:", error);
+    }
+  };
+  const handleIsCompleted = async () => {
+    try {
+      await completeNote(note.note?._id);
+      dispatch(toggleComplete(note.note?._id));
+    } catch (error) {
+      console.error("Error marking note as completed:", error);
+    }
+  };
+
+  const handleEditNote = async () => {
+    navigate(`/editNote/${note.note._id}`);
+  };
+
+  const handleDeleteNote = async () => {
+    try {
+      await deleteNote(note.note?._id);
+      dispatch(deleteNoteAction(note.note?._id));
+    } catch (error) {
+      console.error("Error deleting note:", error);
+    }
+  };
 
   return (
     <div className="bg-gray-200/40 px-4 py-3 rounded-lg flex flex-col shadow-sm">
       <div className="title flex justify-between items-center">
-        <h2 className="font-semibold text-lg -mb-1">{title}</h2>
+        <div className="flex items-center gap-2">
+          <h2 className="font-semibold text-lg -mb-1">
+            {title.charAt(0).toUpperCase() + title.slice(1)}
+          </h2>
+          <p
+            title="Category"
+            className="category text-sm bg-slate-300 rounded px-2"
+          >
+            {category.charAt(0).toUpperCase() + category.slice(1)}
+          </p>
+        </div>
         <div className="favorite">
           {isStarred ? (
-            <FaStar className="text-yellow-500 text-xl hover:cursor-pointer" />
+            <FaStar
+              title="Favorite"
+              className="text-yellow-500 text-xl cursor-pointer hover:text-gray-500"
+              onClick={handleAddFavNote}
+            />
           ) : (
-            <FaRegStar className="text-gray-500 hover:text-yellow-500 text-xl hover:cursor-pointer" />
+            <FaRegStar
+              title="Favorite"
+              className="text-gray-500 hover:text-yellow-500 text-xl cursor-pointer"
+              onClick={handleAddFavNote}
+            />
           )}
         </div>
       </div>
 
       <span className="time text-sm text-gray-600 mb-2">{time}</span>
       <p className="content">
-        {content?.length > 70 ? content.slice(0, 70) + "...see more" : content}
+        {content?.length > 100 ? content.slice(0, 100) + "..." : content}
       </p>
       <div className="actions flex justify-between items-center mt-3">
         <div className="left">
           <div className="mark-as-completed">
             {isCompleted ? (
-              <FaBookmark className="text-green-600 text-lg" />
+              <FaBookmark
+                title="Mark as Completed"
+                className="text-green-600 text-lg cursor-pointer hover:text-gray-500"
+                onClick={handleIsCompleted}
+              />
             ) : (
-              <FaRegBookmark className="text-gray-500 text-lg hover:cursor-pointer hover:text-green-600" />
+              <FaRegBookmark
+                title="Mark as Completed"
+                className="text-gray-500 text-lg cursor-pointer hover:text-green-600"
+                onClick={handleIsCompleted}
+              />
             )}
           </div>
         </div>
         <div className="right gap-4 flex items-center">
           <button>
-            <FaRegEdit className="text-gray-500 text-xl hover:cursor-pointer hover:text-blue-600" />
+            <FaRegEdit
+              title="Edit Note"
+              className="edit text-gray-500 text-xl hover:cursor-pointer hover:text-blue-600"
+              onClick={handleEditNote}
+            />
           </button>
           <button>
-            <RiDeleteBinLine className="text-gray-500 text-xl hover:cursor-pointer hover:text-red-600" />
+            <RiDeleteBinLine
+              title="Delete Note"
+              className="delete text-gray-500 text-xl hover:cursor-pointer hover:text-red-600"
+              onClick={handleDeleteNote}
+            />
           </button>
         </div>
       </div>

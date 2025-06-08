@@ -10,7 +10,7 @@ const completeNote = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Note had been deleted");
   }
 
-  note.isCompleted = true;
+  note.isCompleted = !note.isCompleted;
   await note.save({ validateBeforeSave: false });
 
   return res.status(200).json(new ApiResponse(200, "Note is mark as done"));

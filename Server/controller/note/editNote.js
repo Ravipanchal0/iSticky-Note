@@ -1,7 +1,7 @@
 import { ApiError, ApiResponse, asyncHandler } from "../../utils/index.js";
 import Note from "../../models/note.model.js";
 
-const updateNote = asyncHandler(async (req, res) => {
+const editNote = asyncHandler(async (req, res) => {
   // Get updated data from frontend e.g content, category
   // update note
 
@@ -23,7 +23,7 @@ const updateNote = asyncHandler(async (req, res) => {
     }
   );
 
-  if (!updateNote) {
+  if (!updatedNote) {
     throw new ApiError(404, "Note was deleted");
   }
 
@@ -32,4 +32,4 @@ const updateNote = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, updatedNote, "Note updated successfully"));
 });
 
-export default updateNote;
+export default editNote;

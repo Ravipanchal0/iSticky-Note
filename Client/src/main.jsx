@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store/store.js";
-import { AuthLayout } from "./components/index.js";
+import { AuthLayout, NoteForm } from "./components/index.js";
 import {
   AboutPage,
   AddNotePage,
@@ -51,6 +51,12 @@ const router = createBrowserRouter(
       />
       <Route
         path="addNote"
+        element={
+          <AuthLayout children={<AddNotePage />} authentication={true} />
+        }
+      />
+      <Route
+        path="editNote/:id"
         element={
           <AuthLayout children={<AddNotePage />} authentication={true} />
         }

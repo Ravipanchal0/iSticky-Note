@@ -3,7 +3,7 @@ import verifyAccessToken from "../middlewares/auth.middleware.js";
 import {
   createNote,
   getAllNoteOfUser,
-  updateNote,
+  editNote,
   getNoteByCategory,
   addFavoriteNote,
   completeNote,
@@ -16,7 +16,7 @@ const router = express.Router();
 router.route("/addNote").post(verifyAccessToken, createNote);
 router.route("/getNotes").get(verifyAccessToken, getAllNoteOfUser);
 router.route("/favNotes").get(verifyAccessToken, getFavNotes);
-router.route("/update-note").put(updateNote);
+router.route("/update-note").put(editNote);
 router.route("/addFavorite").put(addFavoriteNote);
 router.route("/completeNote").put(completeNote);
 router.route("/delete-note").delete(deleteNote);
