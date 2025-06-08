@@ -7,9 +7,14 @@ import {
   VscDebugBreakpointData,
 } from "../../assets/icons.js";
 
+import { useSelector } from "react-redux";
+
 const Sidebar = () => {
+  const categoriess = useSelector((state) => state.note.categories);
+
+  console.log(categoriess);
+
   const categories = [
-    { name: "All Notes", textColor: "text-gray-800" },
     { name: "Work", textColor: "text-blue-600" },
     { name: "Personal", textColor: "text-pink-500" },
     { name: "Important", textColor: "text-red-600" },
@@ -35,7 +40,7 @@ const Sidebar = () => {
           )}
         </NavLink>
 
-        <NavLink to="/all-notes">
+        <NavLink to="/notes">
           {({ isActive }) => (
             <li
               className={`px-5 py-1 cursor-pointer flex items-center gap-3 text-lg rounded 
@@ -73,13 +78,10 @@ const Sidebar = () => {
           CATEGORY
         </label>
         <ul className="flex flex-col gap-1 px-6">
-          {categories.map((category) => (
-            <li
-              key={category.name}
-              className={`${category.textColor} flex gap-3 items-center`}
-            >
-              <VscDebugBreakpointData className={`${category.textColor}`} />
-              {category.name}
+          {categoriess.map((category) => (
+            <li key={category} className={` flex gap-3 items-center`}>
+              <VscDebugBreakpointData />
+              {category}
             </li>
           ))}
         </ul>
