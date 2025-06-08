@@ -26,7 +26,8 @@ import {
 } from "../../assets/icons.js";
 
 const NoteCard = (note) => {
-  const { title, category, time, content, isStarred, isCompleted } = note.note;
+  const { title, category, time, content, isStarred, isCompleted, createdAt } =
+    note.note;
   const [showFullNote, setShowFullNote] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -154,6 +155,9 @@ const NoteCard = (note) => {
         <Note
           title={title}
           content={content}
+          category={category}
+          createdAt={createdAt}
+          isStarred={isStarred}
           onClose={() => setShowFullNote(false)}
         />
       )}

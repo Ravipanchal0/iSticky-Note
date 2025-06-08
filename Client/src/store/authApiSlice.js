@@ -86,6 +86,7 @@ export const noteApiSlice = apiSlice.injectEndpoints({
         url: `${NOTE_URL}/getNotes`,
         method: "GET",
       }),
+      providesTags: ["Note"],
     }),
     createNote: builder.mutation({
       query: (noteData) => ({
@@ -93,6 +94,7 @@ export const noteApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: noteData,
       }),
+      providesTags: ["Note"],
     }),
     //   async onQueryStarted(noteData, { dispatch, queryFulfilled }) {
     //     try {
@@ -108,6 +110,7 @@ export const noteApiSlice = apiSlice.injectEndpoints({
         method: "PUT",
         body: note,
       }),
+      providesTags: ["Note"],
     }),
     deleteNote: builder.mutation({
       query: (noteId) => ({
@@ -115,6 +118,7 @@ export const noteApiSlice = apiSlice.injectEndpoints({
         method: "DELETE",
         body: { _id: noteId },
       }),
+      providesTags: ["Note"],
     }),
     completeNote: builder.mutation({
       query: (noteId) => ({
@@ -122,6 +126,7 @@ export const noteApiSlice = apiSlice.injectEndpoints({
         method: "PUT",
         body: { _id: noteId },
       }),
+      providesTags: ["Note"],
     }),
     addFavNote: builder.mutation({
       query: (noteId) => ({
@@ -129,12 +134,7 @@ export const noteApiSlice = apiSlice.injectEndpoints({
         method: "PUT",
         body: { _id: noteId },
       }),
-    }),
-    getFavNotes: builder.mutation({
-      query: () => ({
-        url: `${NOTE_URL}/favNotes`,
-        method: "GET",
-      }),
+      providesTags: ["Note"],
     }),
   }),
 });
