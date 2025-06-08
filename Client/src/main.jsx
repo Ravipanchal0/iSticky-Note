@@ -32,7 +32,7 @@ const router = createBrowserRouter(
         element={<AuthLayout children={<LoginPage />} authentication={false} />}
       />
       <Route
-        path="signup"
+        path="register"
         element={
           <AuthLayout children={<SignupPage />} authentication={false} />
         }
@@ -44,19 +44,19 @@ const router = createBrowserRouter(
         }
       />
       <Route
-        path="allNotes"
+        path="notes"
         element={
           <AuthLayout children={<AllNotesPage />} authentication={true} />
         }
       />
       <Route
-        path="addNote"
+        path="create-note"
         element={
           <AuthLayout children={<AddNotePage />} authentication={true} />
         }
       />
       <Route
-        path="editNote/:id"
+        path="note/:id"
         element={
           <AuthLayout children={<AddNotePage />} authentication={true} />
         }

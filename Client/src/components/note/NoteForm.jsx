@@ -24,7 +24,7 @@ const NoteForm = () => {
     content: "",
   });
 
-  const [createNote, { isLoading }] = useCreateNoteMutation();
+  const [createNote] = useCreateNoteMutation();
   const [editNote] = useEditNoteMutation();
 
   const handleChange = (e) => {
@@ -51,13 +51,13 @@ const NoteForm = () => {
       if (isEditing) {
         const response = await editNote({ _id: id, ...noteData }).unwrap();
         if (response) {
-          navigate("/allNotes");
+          navigate("/notes");
         }
       } else {
         const response = await createNote(noteData).unwrap();
         if (response) {
           dispatch(addNote(response.data));
-          navigate("/allNotes");
+          navigate("/notes");
         }
       }
     } catch (err) {
